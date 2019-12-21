@@ -1,25 +1,26 @@
-const nodemailer = require('nodemailer')
-const express = require('express');
-const app = express();
-​
-//body parser middleware to get params from requests
-var bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({
-    extended: false
-})); // support encoded bodies
-// app.use((req, res, next) => {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//     next();
-// })
-app.use(bodyParser.json()); // support json encoded bodies
-​
-//set port
-app.set('port', process.env.PORT || 8000);
-​
-//start serving static files
-app.use(express.static('public'));
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
-});
+// import modules
+const express = require('express')
+const bodyParser = require('body-parser')
 
+// set up app and middleware
+const App = express()
+App.use(bodyParser.json()) // support json encoded bodies
+App.use(bodyParser.urlencoded({
+  extended: true
+})) // support encoded bodies
+
+// set port
+App.set('port', process.env.PORT || 8000)
+
+// start server
+const WebServer = App.listen(App.get('port'), function () {
+  let Host = WebServer.address().address
+  let Port = WebServer.address().port
+  console.log('Your express web server is listening at http://%s:%s.', Host, Port)
+})
+
+// start serving static files
+App.use(express.static('public'))
+App.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html')
+})
