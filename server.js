@@ -2,12 +2,21 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 
+
 // set up app and middleware
 const App = express()
 App.use(bodyParser.json()) // support json encoded bodies
 App.use(bodyParser.urlencoded({
   extended: true
 })) // support encoded bodies
+
+//Send email
+App.post('/email', (req, res) => {
+
+  console.log('Data:', req.body);
+  res.json({ message: 'Got your message fam' })
+
+});
 
 // set port
 App.set('port', process.env.PORT || 8000)
@@ -24,3 +33,7 @@ App.use(express.static('public'))
 App.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html')
 })
+
+//node mailer
+
+
