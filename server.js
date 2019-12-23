@@ -10,14 +10,6 @@ App.use(bodyParser.urlencoded({
   extended: true
 })) // support encoded bodies
 
-//Send email
-App.post('/email', (req, res) => {
-
-  console.log('Data:', req.body);
-  res.json({ message: 'Got your message fam' })
-
-});
-
 // set port
 App.set('port', process.env.PORT || 8000)
 
